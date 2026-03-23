@@ -334,17 +334,19 @@ export default function PortalContainer({ children }: { children: React.ReactNod
   }, [])
 
   return (
-    <div
-      ref={containerRef}
-      style={{
-        position: 'fixed',
-        inset: 0,
-        overflow: 'hidden',
-      }}
-    >
-      <UnifiedCanvas progressRef={progressRef} />
-      {children}
+    <>
+      <div
+        ref={containerRef}
+        style={{
+          position: 'fixed',
+          inset: 0,
+          overflow: 'hidden',
+        }}
+      >
+        <UnifiedCanvas progressRef={progressRef} />
+        {children}
+      </div>
       <SectionDots total={sectionCount} active={activeSection} onNavigate={navigateTo} />
-    </div>
+    </>
   )
 }
