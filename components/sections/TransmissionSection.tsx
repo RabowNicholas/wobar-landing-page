@@ -56,7 +56,7 @@ export default function TransmissionSection() {
               color: 'var(--color-white)',
             }}
           >
-            Wobar opens portals through bass music. Dubstep, halftime, drum & bass, and experimental bass structured around the 5-Act Portal Framework — a journey architecture built on shadow work and somatic release. Based in Salt Lake City.
+            wobar opens portals through bass music. dubstep and experimental bass. the journey is the point.
           </p>
         </blockquote>
       </div>
