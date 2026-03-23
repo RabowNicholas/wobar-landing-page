@@ -5,7 +5,7 @@ import { gsap } from 'gsap'
 import UnifiedCanvas from '@/components/UnifiedCanvas'
 
 const DRAG_FULL_RATIO = 0.4
-const COMPLETE_THRESHOLD = 0.35
+const COMPLETE_THRESHOLD = 0.22
 const VELOCITY_THRESHOLD = 0.4
 
 // ── Section dots ──────────────────────────────────────────────────────────────
@@ -94,18 +94,18 @@ export default function PortalContainer({ children }: { children: React.ReactNod
     const inContent = inEl.querySelector<HTMLElement>('.layer-content')
 
     gsap.set(inEl, { zIndex: 2 })
-    gsap.set(inBg, { scale: dir > 0 ? 0.3 : 2.2, filter: 'blur(24px)', opacity: 0 })
+    gsap.set(inBg, { scale: dir > 0 ? 0.3 : 2.2, opacity: 0 })
     gsap.set(inContent, { scale: dir > 0 ? 0.7 : 1.3, opacity: 0 })
 
     gsap.set(outEl, { zIndex: 3 })
-    gsap.set(outBg, { scale: 1, filter: 'blur(0px)', opacity: 1 })
+    gsap.set(outBg, { scale: 1, opacity: 1 })
     gsap.set(outContent, { scale: 1, opacity: 1 })
 
     const tl = gsap.timeline({ paused: true })
 
-    tl.to(outBg, { scale: dir > 0 ? 2.4 : 0.3, filter: 'blur(48px)', opacity: 0, ease: 'none', duration: 1 }, 0)
+    tl.to(outBg, { scale: dir > 0 ? 2.4 : 0.3, opacity: 0, ease: 'none', duration: 1 }, 0)
     tl.to(outContent, { scale: dir > 0 ? 1.12 : 0.9, opacity: 0, ease: 'none', duration: 1 }, 0)
-    tl.to(inBg, { scale: 1, filter: 'blur(0px)', opacity: 1, ease: 'none', duration: 1 }, 0)
+    tl.to(inBg, { scale: 1, opacity: 1, ease: 'none', duration: 1 }, 0)
     tl.to(inContent, { scale: 1, opacity: 1, ease: 'none', duration: 1 }, 0.12)
 
     return tl

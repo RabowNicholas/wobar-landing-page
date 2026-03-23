@@ -236,7 +236,7 @@ export default function UnifiedCanvas({ progressRef }: { progressRef: React.Muta
 
     function tick() {
       frame++
-      smoothProgress += (progressRef.current - smoothProgress) * 0.08
+      smoothProgress += (progressRef.current - smoothProgress) * 0.12
       const progress = smoothProgress
       const params = getParams(progress)
 

@@ -42,7 +42,7 @@ const SOCIALS = [
 export default function CaptureSection() {
   return (
     <section id="section-capture" data-portal-section aria-labelledby="capture-label">
-      <div className="layer-bg" style={{ position: 'absolute', inset: 0, background: 'transparent', willChange: 'transform, opacity, filter' }} />
+      <div className="layer-bg" style={{ position: 'absolute', inset: 0, background: 'transparent', willChange: 'transform, opacity' }} />
       <div
         className="layer-content"
         style={{

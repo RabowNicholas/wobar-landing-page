@@ -3,7 +3,7 @@
 export default function FooterSection() {
   return (
     <section id="section-footer" data-portal-section>
-      <div className="layer-bg" style={{ position: 'absolute', inset: 0, background: 'var(--color-void)', willChange: 'transform, opacity, filter' }} />
+      <div className="layer-bg" style={{ position: 'absolute', inset: 0, background: 'var(--color-void)', willChange: 'transform, opacity' }} />
       <div
         className="layer-content"
         style={{

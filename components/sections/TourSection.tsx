@@ -76,7 +76,7 @@ export default function TourSection({ sets }: TourSectionProps) {
 
   return (
     <section id="section-tour" data-portal-section aria-labelledby="tour-label">
-      <div className="layer-bg" style={{ position: 'absolute', inset: 0, background: 'transparent', willChange: 'transform, opacity, filter' }} />
+      <div className="layer-bg" style={{ position: 'absolute', inset: 0, background: 'transparent', willChange: 'transform, opacity' }} />
       <div
         className="layer-content"
         style={{

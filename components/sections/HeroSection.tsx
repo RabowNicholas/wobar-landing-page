@@ -55,7 +55,7 @@ export default function HeroSection() {
 
   return (
     <section id="section-hero" data-portal-section>
-      <div className="layer-bg" style={{ position: 'absolute', inset: 0, background: 'transparent', willChange: 'transform, opacity, filter' }} />
+      <div className="layer-bg" style={{ position: 'absolute', inset: 0, background: 'transparent', willChange: 'transform, opacity' }} />
       <div
         className="layer-content"
         style={{

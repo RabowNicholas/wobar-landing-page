@@ -172,7 +172,7 @@ function FeaturedRelease({ release }: { release: Release }) {
 export default function MusicSection({ featured, catalog }: MusicSectionProps) {
   return (
     <section id="section-music" data-portal-section aria-labelledby="music-label">
-      <div className="layer-bg" style={{ position: 'absolute', inset: 0, background: 'transparent', willChange: 'transform, opacity, filter' }} />
+      <div className="layer-bg" style={{ position: 'absolute', inset: 0, background: 'transparent', willChange: 'transform, opacity' }} />
       <div
         className="layer-content"
         style={{
