@@ -122,7 +122,7 @@ export default function HeroSection() {
               letterSpacing: '0.05em',
             }}
           >
-            the portal goes inward.
+            psychedelic bass
           </p>
 
           <span

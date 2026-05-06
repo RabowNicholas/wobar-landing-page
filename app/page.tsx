@@ -1,17 +1,14 @@
 import TextureOverlay from '@/components/TextureOverlay'
 import HeroSection from '@/components/sections/HeroSection'
-import TransmissionSection from '@/components/sections/TransmissionSection'
-import TourSection from '@/components/sections/TourSection'
 import MusicSection from '@/components/sections/MusicSection'
-import CaptureSection from '@/components/sections/CaptureSection'
+import ConnectSection from '@/components/sections/ConnectSection'
 import PortalContainer from '@/components/PortalContainer'
-import { getSets, getFeaturedRelease, getCatalogReleases } from '@/lib/sanity/queries'
+import { getFeaturedRelease, getCatalogReleases } from '@/lib/sanity/queries'
 
 export const revalidate = 60
 
 export default async function Home() {
-  const [sets, featured, catalog] = await Promise.all([
-    getSets().catch(() => []),
+  const [featured, catalog] = await Promise.all([
     getFeaturedRelease().catch(() => null),
     getCatalogReleases().catch(() => []),
   ])
@@ -22,9 +19,7 @@ export default async function Home() {
       <PortalContainer>
         <HeroSection />
         <MusicSection featured={featured} catalog={catalog} />
-        <TourSection sets={sets} />
-        <TransmissionSection />
-        <CaptureSection />
+        <ConnectSection />
       </PortalContainer>
     </>
   )
