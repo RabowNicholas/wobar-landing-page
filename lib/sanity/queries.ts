@@ -99,15 +99,15 @@ export async function getSets() {
   }`)
 }
 
-// ── Music Catalog (new schema) ─────────────────────────────
+// ── Music Catalog ──────────────────────────────────────────
 export async function getFeaturedRelease() {
   return sanityClient.fetch(`*[_type == "release" && featured == true][0] {
-    name, releaseType, coverArt, previewClip { asset->{ url } }, soundcloudUrl, spotifyUrl, youtubeUrl
+    name, releaseType, coverArt, url
   }`)
 }
 
 export async function getCatalogReleases() {
   return sanityClient.fetch(`*[_type == "release" && featured != true] | order(_createdAt desc) {
-    name, releaseType, coverArt, previewClip { asset->{ url } }, soundcloudUrl, spotifyUrl, youtubeUrl
+    name, releaseType, coverArt, url
   }`)
 }

@@ -9,10 +9,7 @@ export interface Release {
   name: string
   releaseType: string
   coverArt?: any
-  preSaveUrl?: string
-  soundcloudUrl?: string
-  spotifyUrl?: string
-  youtubeUrl?: string
+  url?: string
 }
 
 interface MusicSectionProps {
@@ -64,7 +61,6 @@ function CoverArt({ release, size }: { release: Release; size: number }) {
 
 function CatalogRow({ release }: { release: Release }) {
   const [hovered, setHovered] = useState(false)
-  const streamingUrl = release.spotifyUrl ?? release.soundcloudUrl ?? release.youtubeUrl
 
   const inner = (
     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', minHeight: '44px', padding: '10px 0', width: '100%' }}>
@@ -92,8 +88,8 @@ function CatalogRow({ release }: { release: Release }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {streamingUrl ? (
-        <Link href={streamingUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'block' }}>
+      {release.url ? (
+        <Link href={release.url} target="_blank" rel="noopener noreferrer" style={{ display: 'block' }}>
           {inner}
         </Link>
       ) : inner}
@@ -104,10 +100,6 @@ function CatalogRow({ release }: { release: Release }) {
 // ── Featured release ──────────────────────────────────────────────────────────
 
 function FeaturedRelease({ release }: { release: Release }) {
-  const streamingUrl = release.spotifyUrl ?? release.soundcloudUrl ?? release.youtubeUrl
-  const primaryUrl = release.preSaveUrl ?? streamingUrl
-  const isPreSave = Boolean(release.preSaveUrl)
-
   const coverArtContent = release.coverArt ? (
     <Image
       src={urlFor(release.coverArt).width(720).height(720).url()}
@@ -145,8 +137,8 @@ function FeaturedRelease({ release }: { release: Release }) {
 
   return (
     <div data-entrance style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
-      {primaryUrl ? (
-        <Link href={primaryUrl} target="_blank" rel="noopener noreferrer" style={{ ...coverStyle, cursor: 'pointer' }}>
+      {release.url ? (
+        <Link href={release.url} target="_blank" rel="noopener noreferrer" style={{ ...coverStyle, cursor: 'pointer' }}>
           {coverArtContent}
         </Link>
       ) : (
@@ -155,18 +147,7 @@ function FeaturedRelease({ release }: { release: Release }) {
         </div>
       )}
 
-      <div style={{ padding: '12px 0 0', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-        {isPreSave && (
-          <span style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '0.625rem',
-            color: 'var(--color-white-dim)',
-            letterSpacing: '0.2em',
-            textTransform: 'lowercase',
-          }}>
-            next release
-          </span>
-        )}
+      <div style={{ padding: '12px 0 0' }}>
         <h2 style={{
           fontFamily: 'var(--font-display)',
           fontSize: 'clamp(1.4rem, 6vw, 1.8rem)',
@@ -176,32 +157,6 @@ function FeaturedRelease({ release }: { release: Release }) {
         }}>
           {release.name}
         </h2>
-        {isPreSave && release.preSaveUrl && (
-          <Link
-            href={release.preSaveUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              minHeight: 48,
-              padding: '12px 20px',
-              background: 'var(--color-white)',
-              color: 'var(--color-black, #03020A)',
-              fontFamily: 'var(--font-display)',
-              fontSize: '0.875rem',
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              textDecoration: 'none',
-              transition: 'opacity 0.15s',
-            }}
-            onMouseEnter={e => { e.currentTarget.style.opacity = '0.85' }}
-            onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}
-          >
-            pre-save
-          </Link>
-        )}
       </div>
     </div>
   )

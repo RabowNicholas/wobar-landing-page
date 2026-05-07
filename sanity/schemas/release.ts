@@ -36,26 +36,10 @@ export default {
       description: 'Only one release should be featured at a time. Featured release appears large at top.'
     },
     {
-      name: 'previewClip',
-      title: 'Preview Clip (MP3)',
-      type: 'file',
-      options: { accept: 'audio/mpeg' },
-      description: 'Optional. 30–60 second preview clip. Plays on click.'
-    },
-    {
-      name: 'soundcloudUrl',
-      title: 'SoundCloud URL',
-      type: 'url'
-    },
-    {
-      name: 'spotifyUrl',
-      title: 'Spotify URL',
-      type: 'url'
-    },
-    {
-      name: 'youtubeUrl',
-      title: 'YouTube URL',
-      type: 'url'
+      name: 'url',
+      title: 'Link',
+      type: 'url',
+      description: 'One link only. Pre-save smart link before drop, streaming link (Spotify/SoundCloud/YouTube/etc.) after. Update at release time.'
     }
   ]
 }

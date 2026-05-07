@@ -7,7 +7,6 @@ import LogoMark from '@/components/shared/LogoMark'
 export default function HeroSection() {
   const logoRef = useRef<HTMLDivElement>(null)
   const titleRef = useRef<HTMLHeadingElement>(null)
-  const taglineRef = useRef<HTMLParagraphElement>(null)
   const scrollRef = useRef<HTMLSpanElement>(null)
   const [logoSize, setLogoSize] = useState(360)
 
@@ -38,8 +37,7 @@ export default function HeroSection() {
       )
     }
 
-    tl.fromTo(taglineRef.current, { opacity: 0 }, { opacity: 1, duration: 0.4 }, 0.7)
-    tl.fromTo(scrollRef.current, { opacity: 0 }, { opacity: 0.6, duration: 0.4 }, 1.2)
+    tl.fromTo(scrollRef.current, { opacity: 0 }, { opacity: 0.6, duration: 0.4 }, 0.9)
 
     // Pulse between 0.6 and 0.4 — never drops below WCAG-safe contrast
     tl.to(scrollRef.current, {
@@ -111,19 +109,6 @@ export default function HeroSection() {
               </span>
             ))}
           </h1>
-
-          <p
-            ref={taglineRef}
-            data-entrance
-            style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '0.75rem',
-              color: 'var(--color-white-dim)',
-              letterSpacing: '0.05em',
-            }}
-          >
-            psychedelic bass
-          </p>
 
           <span
             ref={scrollRef}

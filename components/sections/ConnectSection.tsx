@@ -48,7 +48,7 @@ const SOCIALS = [
   },
 ]
 
-const BOOKING_EMAIL = 'bookings@wobar.live'
+const BOOKING_EMAIL = 'contact.wobar@gmail.com'
 
 export default function ConnectSection() {
   return (
