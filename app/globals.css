@@ -42,6 +42,12 @@ a {
   outline-offset: 2px;
 }
 
+a:active,
+button:active {
+  opacity: 0.5;
+  transition: opacity 0.1s;
+}
+
 ::selection {
   background: var(--color-purple-mid);
   color: var(--color-white);

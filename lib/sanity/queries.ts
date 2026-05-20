@@ -100,14 +100,16 @@ export async function getSets() {
 }
 
 // ── Music Catalog ──────────────────────────────────────────
+// Hosted Sanity schema stores the streaming URL on `soundcloudUrl`.
+// Project as `url` so the rest of the app stays platform-neutral.
 export async function getFeaturedRelease() {
   return sanityClient.fetch(`*[_type == "release" && featured == true][0] {
-    name, releaseType, coverArt, url
+    name, releaseType, coverArt, "url": soundcloudUrl
   }`)
 }
 
 export async function getCatalogReleases() {
   return sanityClient.fetch(`*[_type == "release" && featured != true] | order(_createdAt desc) {
-    name, releaseType, coverArt, url
+    name, releaseType, coverArt, "url": soundcloudUrl
   }`)
 }

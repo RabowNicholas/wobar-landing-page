@@ -70,15 +70,28 @@ function CatalogRow({ release }: { release: Release }) {
         fontFamily: 'var(--font-display)',
         fontSize: '0.85rem',
         textTransform: 'uppercase',
-        color: hovered ? 'var(--color-white)' : 'rgba(248,248,248,0.75)',
+        color: 'var(--color-white)',
         lineHeight: 1.2,
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
-        transition: 'color 0.15s',
       }}>
         {release.name}
       </p>
+      {release.url && (
+        <span
+          aria-hidden
+          style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: '0.875rem',
+            color: hovered ? 'var(--color-purple-bright)' : 'rgba(248,248,248,0.55)',
+            flexShrink: 0,
+            transition: 'color 0.15s',
+          }}
+        >
+          →
+        </span>
+      )}
     </div>
   )
 
@@ -147,7 +160,7 @@ function FeaturedRelease({ release }: { release: Release }) {
         </div>
       )}
 
-      <div style={{ padding: '12px 0 0' }}>
+      <div style={{ padding: '12px 0 0', display: 'flex', flexDirection: 'column', gap: '10px' }}>
         <h2 style={{
           fontFamily: 'var(--font-display)',
           fontSize: 'clamp(1.4rem, 6vw, 1.8rem)',
@@ -157,6 +170,31 @@ function FeaturedRelease({ release }: { release: Release }) {
         }}>
           {release.name}
         </h2>
+        {release.url && (
+          <Link
+            href={release.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Listen to ${release.name}`}
+            style={{
+              alignSelf: 'flex-start',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              minHeight: 44,
+              padding: '10px 0',
+              fontFamily: 'var(--font-mono)',
+              fontSize: '0.8125rem',
+              letterSpacing: '0.15em',
+              textTransform: 'uppercase',
+              color: 'var(--color-purple-bright)',
+              textDecoration: 'none',
+            }}
+          >
+            <span aria-hidden>▶</span>
+            <span>Listen</span>
+          </Link>
+        )}
       </div>
     </div>
   )
@@ -166,7 +204,7 @@ function FeaturedRelease({ release }: { release: Release }) {
 
 export default function MusicSection({ featured, catalog }: MusicSectionProps) {
   return (
-    <section id="section-music" data-portal-section aria-labelledby="music-label">
+    <section id="section-music" data-portal-section aria-label="Music">
       <div className="layer-bg" style={{ position: 'absolute', inset: 0, background: 'transparent', willChange: 'transform, opacity' }} />
       <div
         className="layer-content"
@@ -192,17 +230,17 @@ export default function MusicSection({ featured, catalog }: MusicSectionProps) {
           }}
         >
           <span
-            id="music-label"
             data-entrance
+            aria-hidden
             style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '0.625rem',
+              fontFamily: 'var(--font-display)',
+              fontSize: '0.875rem',
               color: 'var(--color-white-dim)',
-              letterSpacing: '0.2em',
-              textTransform: 'lowercase',
+              letterSpacing: '0.25em',
+              textTransform: 'uppercase',
             }}
           >
-            catalog
+            wobar
           </span>
 
           {featured && <FeaturedRelease release={featured} />}

@@ -1,5 +1,4 @@
 import TextureOverlay from '@/components/TextureOverlay'
-import HeroSection from '@/components/sections/HeroSection'
 import MusicSection from '@/components/sections/MusicSection'
 import ConnectSection from '@/components/sections/ConnectSection'
 import PortalContainer from '@/components/PortalContainer'
@@ -17,7 +16,6 @@ export default async function Home() {
     <>
       <TextureOverlay />
       <PortalContainer>
-        <HeroSection />
         <MusicSection featured={featured} catalog={catalog} />
         <ConnectSection />
       </PortalContainer>

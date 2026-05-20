@@ -1,24 +1,8 @@
 'use client'
 
-const SOCIALS = [
-  {
-    label: 'instagram',
-    href: 'https://www.instagram.com/wobar.exe/',
-    icon: (
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-      </svg>
-    ),
-  },
-  {
-    label: 'tiktok',
-    href: 'https://www.tiktok.com/@wobar1',
-    icon: (
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/>
-      </svg>
-    ),
-  },
+type SocialLink = { label: string; href: string; icon: React.ReactNode }
+
+const LISTEN_LINKS: SocialLink[] = [
   {
     label: 'spotify',
     href: 'https://open.spotify.com/search/wobar',
@@ -48,11 +32,89 @@ const SOCIALS = [
   },
 ]
 
+const FOLLOW_LINKS: SocialLink[] = [
+  {
+    label: 'instagram',
+    href: 'https://www.instagram.com/wobar.exe/',
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+      </svg>
+    ),
+  },
+  {
+    label: 'tiktok',
+    href: 'https://www.tiktok.com/@wobar1',
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/>
+      </svg>
+    ),
+  },
+]
+
 const BOOKING_EMAIL = 'contact.wobar@gmail.com'
+
+function SocialGrid({ links, ariaLabel, columns }: {
+  links: SocialLink[]
+  ariaLabel: string
+  columns: number
+}) {
+  return (
+    <ul
+      data-entrance
+      aria-label={ariaLabel}
+      style={{
+        display: 'grid',
+        gridTemplateColumns: `repeat(${columns}, 1fr)`,
+        gap: '12px',
+        listStyle: 'none',
+        padding: 0,
+        margin: 0,
+      }}
+    >
+      {links.map(({ label, href, icon }) => (
+        <li key={label} style={{ display: 'flex' }}>
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={label}
+            style={{
+              flex: 1,
+              minHeight: 64,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '6px',
+              color: 'var(--color-white)',
+              textDecoration: 'none',
+              transition: 'color 0.15s',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.color = 'var(--color-purple-bright)' }}
+            onMouseLeave={e => { e.currentTarget.style.color = 'var(--color-white)' }}
+          >
+            {icon}
+            <span style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: '0.6875rem',
+              letterSpacing: '0.1em',
+              textTransform: 'lowercase',
+              color: 'var(--color-white-dim)',
+            }}>
+              {label}
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}
 
 export default function ConnectSection() {
   return (
-    <section id="section-connect" data-portal-section aria-labelledby="connect-label">
+    <section id="section-connect" data-portal-section aria-label="Connect">
       <div className="layer-bg" style={{ position: 'absolute', inset: 0, background: 'transparent', willChange: 'transform, opacity' }} />
       <div
         className="layer-content"
@@ -76,86 +138,56 @@ export default function ConnectSection() {
             width: '100%',
             display: 'flex',
             flexDirection: 'column',
-            gap: '32px',
+            gap: '28px',
           }}
         >
-          <h2
-            id="connect-label"
-            data-entrance
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(2.5rem, 10vw, 3.5rem)',
-              textTransform: 'uppercase',
-              color: 'var(--color-white)',
-              lineHeight: 1.05,
-            }}
-          >
-            FOLLOW.
-          </h2>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+            <h2
+              data-entrance
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontSize: 'clamp(1.5rem, 6vw, 2rem)',
+                textTransform: 'uppercase',
+                color: 'var(--color-white)',
+                lineHeight: 1.05,
+              }}
+            >
+              Listen.
+            </h2>
+            <SocialGrid links={LISTEN_LINKS} ariaLabel="Streaming platforms" columns={3} />
+          </div>
 
-          <ul
-            data-entrance
-            aria-label="Social links"
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(5, 1fr)',
-              gap: '12px',
-              listStyle: 'none',
-              padding: 0,
-              margin: 0,
-            }}
-          >
-            {SOCIALS.map(({ label, href, icon }) => (
-              <li key={label} style={{ display: 'flex' }}>
-                <a
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  style={{
-                    flex: 1,
-                    minHeight: 64,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '6px',
-                    color: 'var(--color-white)',
-                    textDecoration: 'none',
-                    transition: 'color 0.15s',
-                  }}
-                  onMouseEnter={e => { e.currentTarget.style.color = 'var(--color-purple-bright)' }}
-                  onMouseLeave={e => { e.currentTarget.style.color = 'var(--color-white)' }}
-                >
-                  {icon}
-                  <span style={{
-                    fontFamily: 'var(--font-mono)',
-                    fontSize: '0.5625rem',
-                    letterSpacing: '0.1em',
-                    textTransform: 'lowercase',
-                    color: 'var(--color-white-dim)',
-                  }}>
-                    {label}
-                  </span>
-                </a>
-              </li>
-            ))}
-          </ul>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+            <h2
+              data-entrance
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontSize: 'clamp(1.5rem, 6vw, 2rem)',
+                textTransform: 'uppercase',
+                color: 'var(--color-white)',
+                lineHeight: 1.05,
+              }}
+            >
+              Follow.
+            </h2>
+            <SocialGrid links={FOLLOW_LINKS} ariaLabel="Social media" columns={2} />
+          </div>
 
           <a
             data-entrance
             href={`mailto:${BOOKING_EMAIL}`}
             style={{
+              alignSelf: 'flex-start',
+              display: 'inline-flex',
+              alignItems: 'center',
+              minHeight: 44,
+              padding: '10px 0',
               fontFamily: 'var(--font-mono)',
               fontSize: '0.75rem',
-              color: 'var(--color-white-dim)',
+              color: 'var(--color-white)',
               letterSpacing: '0.05em',
               textDecoration: 'none',
-              transition: 'color 0.15s',
-              alignSelf: 'flex-start',
             }}
-            onMouseEnter={e => { e.currentTarget.style.color = 'var(--color-white)' }}
-            onMouseLeave={e => { e.currentTarget.style.color = 'var(--color-white-dim)' }}
           >
             bookings — {BOOKING_EMAIL}
           </a>
@@ -163,7 +195,7 @@ export default function ConnectSection() {
 
         <p style={{
           fontFamily: 'var(--font-mono)',
-          fontSize: '0.5rem',
+          fontSize: '0.6875rem',
           color: 'var(--color-white-dim)',
           letterSpacing: '0.1em',
           textTransform: 'uppercase',

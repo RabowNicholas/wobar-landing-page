@@ -10,9 +10,10 @@ const VELOCITY_THRESHOLD = 0.4
 
 // ── Section dots ──────────────────────────────────────────────────────────────
 
-function SectionDots({ total, active, onNavigate }: {
+function SectionDots({ total, active, labels, onNavigate }: {
   total: number
   active: number
+  labels: string[]
   onNavigate: (i: number) => void
 }) {
   if (total === 0) return null
@@ -22,12 +23,12 @@ function SectionDots({ total, active, onNavigate }: {
       aria-label="Sections"
       style={{
         position: 'fixed',
-        right: 0,
-        top: '50%',
-        transform: 'translateY(-50%)',
+        bottom: 'max(80px, calc(env(safe-area-inset-bottom) + 56px))',
+        left: '50%',
+        transform: 'translateX(-50%)',
         zIndex: 100,
         display: 'flex',
-        flexDirection: 'column',
+        flexDirection: 'row',
         pointerEvents: 'auto',
       }}
     >
@@ -35,7 +36,7 @@ function SectionDots({ total, active, onNavigate }: {
         <button
           key={i}
           onClick={() => onNavigate(i)}
-          aria-label={`Section ${i + 1}`}
+          aria-label={labels[i] ?? `Section ${i + 1}`}
           aria-current={i === active ? 'true' : undefined}
           style={{
             width: 44,
@@ -71,6 +72,7 @@ export default function PortalContainer({ children }: { children: React.ReactNod
   const progressRef = useRef<number>(0)
   const [activeSection, setActiveSection] = useState(0)
   const [sectionCount, setSectionCount] = useState(0)
+  const [sectionLabels, setSectionLabels] = useState<string[]>([])
 
   const drag = useRef<{
     startY: number
@@ -213,6 +215,7 @@ export default function PortalContainer({ children }: { children: React.ReactNod
       })
 
       setSectionCount(sections.length)
+      setSectionLabels(sections.map((el, i) => el.getAttribute('aria-label') ?? `Section ${i + 1}`))
     })
 
     // ── Scroll conflict helper ────────────────────────────────────────────────
@@ -346,7 +349,7 @@ export default function PortalContainer({ children }: { children: React.ReactNod
         <UnifiedCanvas progressRef={progressRef} />
         {children}
       </div>
-      <SectionDots total={sectionCount} active={activeSection} onNavigate={navigateTo} />
+      <SectionDots total={sectionCount} active={activeSection} labels={sectionLabels} onNavigate={navigateTo} />
     </>
   )
 }
