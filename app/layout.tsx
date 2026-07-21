@@ -3,6 +3,7 @@ import './globals.css'
 import { display, mono, body } from './fonts'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://wobar.music'),
   title: 'WOBAR',
   description: 'Wobar opens portals through bass music. Dubstep, halftime, drum & bass, and experimental bass. Based in Salt Lake City.',
   openGraph: {

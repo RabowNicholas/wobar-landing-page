@@ -193,15 +193,30 @@ export default function ConnectSection() {
           </a>
         </div>
 
-        <p style={{
-          fontFamily: 'var(--font-mono)',
-          fontSize: '0.6875rem',
-          color: 'var(--color-white-dim)',
-          letterSpacing: '0.1em',
-          textTransform: 'uppercase',
-        }}>
-          © 2026 WOBAR
-        </p>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '6px',
+            fontFamily: 'var(--font-mono)',
+            fontSize: '0.6875rem',
+            color: 'var(--color-white-dim)',
+            letterSpacing: '0.1em',
+            textTransform: 'uppercase',
+            textAlign: 'center',
+          }}
+        >
+          <p>© 2026 WOBAR — NDR Business Consulting LLC</p>
+          <p style={{ display: 'flex', gap: '14px' }}>
+            <a href="/privacy" style={{ color: 'inherit', textDecoration: 'underline' }}>
+              Privacy
+            </a>
+            <a href="/sms-terms" style={{ color: 'inherit', textDecoration: 'underline' }}>
+              SMS Terms
+            </a>
+          </p>
+        </div>
       </div>
     </section>
   )
