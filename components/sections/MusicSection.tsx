@@ -281,6 +281,26 @@ export default function MusicSection({ featured, catalog }: MusicSectionProps) {
               )}
             </div>
           )}
+
+          <p
+            data-entrance
+            className="business-attribution"
+            style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: '0.6875rem',
+              lineHeight: 1.5,
+              opacity: 0.8,
+              textAlign: 'center',
+              color: 'var(--color-white-dim)',
+              margin: 0,
+            }}
+          >
+            WOBAR is a music project operated by{' '}
+            <strong>NDR Business Consulting LLC</strong>. Contact:{' '}
+            <a href="mailto:contact.wobar@gmail.com" style={{ color: 'inherit' }}>
+              contact.wobar@gmail.com
+            </a>
+          </p>
         </div>
       </div>
     </section>
