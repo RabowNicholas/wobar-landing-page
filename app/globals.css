@@ -88,3 +88,131 @@ button:active {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ── The Terminal — the web home ───────────────────────────────── */
+.terminal {
+  --t-bg: #050508;
+  --t-fg: #ebe7f4;      /* daemon body — desaturated phosphor */
+  --t-bright: #fbf9ff;  /* user echo */
+  --t-accent: #cbb8f2;  /* prompt glyph, keywords */
+
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--t-bg);
+  color: var(--t-fg);
+  font-family: var(--font-mono), 'Courier New', monospace;
+  cursor: text;
+
+  /* CRT power-on. Timeline (0.9s): 0–90ms the tube strikes (bright flash +
+     vertical collapse→expand); 90–360ms it settles with two brightness
+     wobbles; 360ms+ steady. Sync a mark animation to the ~360ms settle. */
+  transform-origin: center center;
+  animation: crt-power-on 0.9s ease-out both;
+}
+
+.terminal-scroll {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: max(env(safe-area-inset-top), 1.25rem) 1.25rem
+           max(env(safe-area-inset-bottom), 1.25rem);
+  min-height: 100dvh;
+}
+
+/* Boot logo — powers up on the CRT settle (~280ms), rides the tube. */
+.term-logo {
+  display: block;
+  width: 180px;
+  max-width: 55%;
+  height: auto;
+  margin: 1rem auto 2.25rem;
+  opacity: 0;
+  animation: logo-boot 0.6s ease-out 0.28s both;
+}
+@keyframes logo-boot {
+  0%   { opacity: 0; transform: scale(0.92);
+         filter: brightness(3) drop-shadow(0 0 2px rgba(203, 184, 242, 0.2)); }
+  55%  { opacity: 1;
+         filter: brightness(1.7) drop-shadow(0 0 12px rgba(203, 184, 242, 0.75)); }
+  100% { opacity: 1; transform: scale(1);
+         filter: brightness(1) drop-shadow(0 0 6px rgba(203, 184, 242, 0.5)); }
+}
+
+.term-block {
+  font-family: inherit;
+  /* 16px min — below this iOS zooms the page on input focus */
+  font-size: 1.375rem;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0 0 0.9rem;
+  /* phosphor glow — brighter bloom */
+  text-shadow: 0 0 3px rgba(203, 184, 242, 0.45);
+}
+
+.term-daemon { color: var(--t-fg); }
+.term-user { color: var(--t-bright); }
+
+.term-prompt {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 1.375rem;
+  line-height: 1.7;
+}
+
+.term-glyph {
+  color: var(--t-accent);
+  flex: none;
+  text-shadow: 0 0 4px rgba(154, 123, 200, 0.5);
+}
+
+.term-input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--t-bright);
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  caret-color: var(--t-accent);
+  padding: 0;
+}
+.term-input:focus-visible { outline: none; }
+
+/* CRT power-on: tube strike → collapse/expand → settle. Sync marks to ~360ms. */
+@keyframes crt-power-on {
+  0%   { opacity: 0;    transform: scaleY(0.004) scaleX(1.2); filter: brightness(6); }
+  8%   { opacity: 1;    transform: scaleY(0.02)  scaleX(1.1); filter: brightness(5); }
+  16%  { opacity: 1;    transform: scaleY(1.05)  scaleX(1);   filter: brightness(2.4); }
+  24%  { transform: scaleY(0.98) scaleX(1);  filter: brightness(0.5); }
+  32%  { transform: scaleY(1.01) scaleX(1);  filter: brightness(1.7); }
+  40%  { transform: scaleY(1)    scaleX(1);  filter: brightness(0.85); }
+  100% { opacity: 1;    transform: scaleY(1) scaleX(1);       filter: brightness(1); }
+}
+
+/* Scanlines flicker — irregular, low amplitude, continuous. */
+.crt-scanlines { animation: crt-flicker 5s steps(1, end) infinite; }
+@keyframes crt-flicker {
+  0%   { opacity: 1;    }
+  4%   { opacity: 0.82; }
+  8%   { opacity: 1;    }
+  11%  { opacity: 0.9;  }
+  14%  { opacity: 1;    }
+  48%  { opacity: 1;    }
+  50%  { opacity: 0.86; }
+  52%  { opacity: 1;    }
+  78%  { opacity: 1;    }
+  80%  { opacity: 0.8;  }
+  83%  { opacity: 1;    }
+  100% { opacity: 1;    }
+}
+
+/* Reduced motion — no flicker, no power-on flash; land on steady state. */
+@media (prefers-reduced-motion: reduce) {
+  .terminal { animation: none; }
+  .crt-scanlines { animation: none; opacity: 1; }
+  .term-logo { animation: none; opacity: 1;
+    filter: drop-shadow(0 0 6px rgba(203, 184, 242, 0.5)); }
+}

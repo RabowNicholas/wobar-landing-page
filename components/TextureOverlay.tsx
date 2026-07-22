@@ -25,6 +25,18 @@ export default function TextureOverlay() {
           background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.7) 100%)',
         }}
       />
+      {/* Layer 3 — CRT scanlines (subtly flickers) */}
+      <div
+        className="crt-scanlines"
+        style={{
+          position: 'fixed',
+          inset: 0,
+          zIndex: 12,
+          pointerEvents: 'none',
+          backgroundImage:
+            'repeating-linear-gradient(to bottom, transparent 0, transparent 2px, rgba(0,0,0,0.45) 2px, rgba(0,0,0,0.45) 4px)',
+        }}
+      />
     </>
   )
 }
