@@ -29,10 +29,9 @@ export default function Terminal() {
   const [value, setValue] = useState('')
   const [typingId, setTypingId] = useState<number | null>(null) // daemon block being typed
   const [typed, setTyped] = useState(0) // chars revealed of that block
-  const [kbInset, setKbInset] = useState(0) // keyboard height (px) when open
 
   const inputRef = useRef<HTMLInputElement>(null)
-  const bottomRef = useRef<HTMLDivElement>(null)
+  const scrollRef = useRef<HTMLDivElement>(null)
   const idRef = useRef(0)
 
   const introDone = reveal >= INTRO_TEXT.length
@@ -64,37 +63,34 @@ export default function Terminal() {
     return () => clearTimeout(t)
   }, [typingId, typed, blocks])
 
-  // Keep the newest line + prompt pinned to the bottom. When the keyboard is up,
-  // scroll the whole document down so the extra bottom padding lifts the prompt
-  // clear of the keyboard; otherwise just track the newest line.
+  // Scroll the terminal to its bottom (the prompt). The container is sized to the
+  // visual viewport, so its bottom is always just above the keyboard.
   function scrollToBottom() {
     requestAnimationFrame(() => {
-      const vv = window.visualViewport
-      const kb = vv ? Math.max(0, window.innerHeight - vv.height - vv.offsetTop) : 0
-      if (kb > 80) {
-        window.scrollTo({ top: document.documentElement.scrollHeight })
-      } else {
-        bottomRef.current?.scrollIntoView({ block: 'end' })
-      }
+      const el = scrollRef.current
+      if (el) el.scrollTop = el.scrollHeight
     })
   }
 
   useEffect(() => {
     scrollToBottom()
-  }, [blocks, reveal, typed, kbInset])
+  }, [blocks, reveal, typed])
 
-  // Track keyboard height from the visual viewport (open/close resizes it).
+  // Size the scroll container to the visual viewport. The keyboard shrinks the
+  // visual viewport (but not 100dvh), so this is what keeps the prompt on screen.
   useEffect(() => {
     const vv = window.visualViewport
     if (!vv) return
-    const onResize = () => {
-      setKbInset(Math.max(0, window.innerHeight - vv.height - vv.offsetTop))
+    const apply = () => {
+      document.documentElement.style.setProperty('--vvh', `${vv.height}px`)
+      scrollToBottom()
     }
-    vv.addEventListener('resize', onResize)
-    vv.addEventListener('scroll', onResize)
+    apply()
+    vv.addEventListener('resize', apply)
+    vv.addEventListener('scroll', apply)
     return () => {
-      vv.removeEventListener('resize', onResize)
-      vv.removeEventListener('scroll', onResize)
+      vv.removeEventListener('resize', apply)
+      vv.removeEventListener('scroll', apply)
     }
   }, [])
 
@@ -178,10 +174,7 @@ export default function Terminal() {
       className="terminal"
       onClick={() => introDone && inputRef.current?.focus()}
     >
-      <div
-        className="terminal-scroll"
-        style={kbInset ? { paddingBottom: `${kbInset + 72}px` } : undefined}
-      >
+      <div className="terminal-scroll" ref={scrollRef}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img className="term-logo" src="/logo-white.png" alt="wobar" />
 
@@ -215,8 +208,6 @@ export default function Terminal() {
             />
           </form>
         )}
-
-        <div ref={bottomRef} />
       </div>
     </main>
   )

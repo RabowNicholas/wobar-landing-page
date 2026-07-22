@@ -96,8 +96,11 @@ button:active {
   --t-bright: #fbf9ff;  /* user echo */
   --t-accent: #cbb8f2;  /* prompt glyph, keywords */
 
-  min-height: 100vh;
-  min-height: 100dvh;
+  position: fixed;
+  inset: 0;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
   background: var(--t-bg);
   color: var(--t-fg);
   font-family: var(--font-mono), 'Courier New', monospace;
@@ -110,12 +113,16 @@ button:active {
   animation: crt-power-on 0.9s ease-out both;
 }
 
+/* Sized to the visual viewport (--vvh, set from JS) so its bottom sits just
+   above the keyboard; it scrolls internally. Falls back to full height. */
 .terminal-scroll {
   max-width: 720px;
+  height: var(--vvh, 100%);
   margin: 0 auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   padding: max(env(safe-area-inset-top), 1.25rem) 1.25rem
-           max(env(safe-area-inset-bottom), 1.25rem);
-  min-height: 100dvh;
+           max(env(safe-area-inset-bottom), 2.5rem);
 }
 
 /* Boot logo — powers up on the CRT settle (~280ms), rides the tube. */
