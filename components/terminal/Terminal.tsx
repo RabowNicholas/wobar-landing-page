@@ -29,6 +29,7 @@ export default function Terminal() {
   const [value, setValue] = useState('')
   const [typingId, setTypingId] = useState<number | null>(null) // daemon block being typed
   const [typed, setTyped] = useState(0) // chars revealed of that block
+  const [kbInset, setKbInset] = useState(0) // keyboard height (px) when open
 
   const inputRef = useRef<HTMLInputElement>(null)
   const bottomRef = useRef<HTMLDivElement>(null)
@@ -63,22 +64,38 @@ export default function Terminal() {
     return () => clearTimeout(t)
   }, [typingId, typed, blocks])
 
-  // Keep the newest line + prompt pinned to the bottom.
+  // Keep the newest line + prompt pinned to the bottom. When the keyboard is up,
+  // scroll the whole document down so the extra bottom padding lifts the prompt
+  // clear of the keyboard; otherwise just track the newest line.
   function scrollToBottom() {
-    requestAnimationFrame(() => bottomRef.current?.scrollIntoView({ block: 'end' }))
+    requestAnimationFrame(() => {
+      const vv = window.visualViewport
+      const kb = vv ? Math.max(0, window.innerHeight - vv.height - vv.offsetTop) : 0
+      if (kb > 80) {
+        window.scrollTo({ top: document.documentElement.scrollHeight })
+      } else {
+        bottomRef.current?.scrollIntoView({ block: 'end' })
+      }
+    })
   }
 
   useEffect(() => {
     scrollToBottom()
-  }, [blocks, reveal, typed])
+  }, [blocks, reveal, typed, kbInset])
 
-  // The keyboard opening/closing resizes the visual viewport — re-pin to bottom.
+  // Track keyboard height from the visual viewport (open/close resizes it).
   useEffect(() => {
     const vv = window.visualViewport
     if (!vv) return
-    const onResize = () => scrollToBottom()
+    const onResize = () => {
+      setKbInset(Math.max(0, window.innerHeight - vv.height - vv.offsetTop))
+    }
     vv.addEventListener('resize', onResize)
-    return () => vv.removeEventListener('resize', onResize)
+    vv.addEventListener('scroll', onResize)
+    return () => {
+      vv.removeEventListener('resize', onResize)
+      vv.removeEventListener('scroll', onResize)
+    }
   }, [])
 
   function push(kind: Block['kind'], text: string) {
@@ -161,7 +178,10 @@ export default function Terminal() {
       className="terminal"
       onClick={() => introDone && inputRef.current?.focus()}
     >
-      <div className="terminal-scroll">
+      <div
+        className="terminal-scroll"
+        style={kbInset ? { paddingBottom: `${kbInset + 72}px` } : undefined}
+      >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img className="term-logo" src="/logo-white.png" alt="wobar" />
 
