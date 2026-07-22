@@ -63,10 +63,23 @@ export default function Terminal() {
     return () => clearTimeout(t)
   }, [typingId, typed, blocks])
 
-  // Keep the newest line in view.
+  // Keep the newest line + prompt pinned to the bottom.
+  function scrollToBottom() {
+    requestAnimationFrame(() => bottomRef.current?.scrollIntoView({ block: 'end' }))
+  }
+
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ block: 'end' })
+    scrollToBottom()
   }, [blocks, reveal, typed])
+
+  // The keyboard opening/closing resizes the visual viewport — re-pin to bottom.
+  useEffect(() => {
+    const vv = window.visualViewport
+    if (!vv) return
+    const onResize = () => scrollToBottom()
+    vv.addEventListener('resize', onResize)
+    return () => vv.removeEventListener('resize', onResize)
+  }, [])
 
   function push(kind: Block['kind'], text: string) {
     const id = ++idRef.current
@@ -173,7 +186,7 @@ export default function Terminal() {
               className="term-input"
               value={value}
               onChange={(e) => setValue(e.target.value)}
-              onFocus={() => setTimeout(() => bottomRef.current?.scrollIntoView({ block: 'end' }), 300)}
+              onFocus={() => setTimeout(scrollToBottom, 300)}
               autoComplete="off"
               autoCapitalize="off"
               autoCorrect="off"
